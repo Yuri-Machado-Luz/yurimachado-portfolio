@@ -1,3 +1,5 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+
 <div align="center" >
 
 <div class="glitch-wrapper">
@@ -109,3 +111,4 @@ svg text {
    to { transform: translate(0); }
 }
 </style>
+</div>
