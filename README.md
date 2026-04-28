@@ -1,49 +1,111 @@
-# Starlight Starter Kit: Basics
+<div align="center" >
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+<div class="glitch-wrapper">
+   <div class="glitch" data-text="Main Portfolio">Main Portfolio</div>
+</div>
+<div class="wrapper">
+    <svg>
+        <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+            Under Development
+        </text>
+    </svg>
+</div>
 
-```
-pnpm create astro@latest -- --template starlight
-```
+[![Built Starlight](https://astro.badg.es/v2/built-with-starlight/large.svg)](https://starlight.astro.build)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+</div>
 
-## 🚀 Project Structure
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Traditional+Nushu&display=swap");
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+svg {
+    font-family: "Noto Traditional Nushu", sans-serif;
+    width: 100%;
+    height: 100%;
+}
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
+svg text {
+    animation: stroke 5s infinite alternate;
+    stroke-width: 2;
+    stroke: #CB2B0D;
+    font-size: 3rem;
+}
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+@keyframes stroke {
+    0% {
+        fill: rgba(255,0,0,0);
+        stroke: rgba(203,43,13,1);
+        stroke-dashoffset: 25%;
+        stroke-dasharray: 0 50%;
+        stroke-width: 2;
+    }
+    70% {
+        fill: rgba(255,0,0,0);
+        stroke: rgba(203,43,13,1);
+    }
+    80% {
+        fill: rgba(255,0,0,0);
+        stroke: rgba(203,43,13,1);
+        stroke-width: 3;
+    }
+    100% {
+        fill: rgba(255,0,0,1);
+        stroke: rgba(203,43,13,0);
+        stroke-dashoffset: -25%;
+        stroke-dasharray: 50% 0;
+        stroke-width: 0;
+    }
+}
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+.wrapper {
+}
 
-Static assets, like favicons, can be placed in the `public/` directory.
+.glitch-wrapper {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   background-color: #000000;
+}
 
-## 🧞 Commands
+.glitch {
+   position: relative;
+   font-size: 2rem;
+   font-weight: bold;
+   color: #FFFFFF;
+   letter-spacing: 3px;
+   z-index: 1;
+}
 
-All commands are run from the root of the project, from a terminal:
+.glitch:before, .glitch:after {
+   display: block;
+   content: attr(data-text);
+   position: absolute;
+   top: 0;
+   left: 0;
+   opacity: 0.8;
+}
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+.glitch:before {
+   animation: glitch-it 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+   color: #00FFFF;
+   z-index: -1;
+}
 
-## 👀 Want to learn more?
+.glitch:after {
+   animation: glitch-it 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+   color: #FF0001;
+   z-index: -2;
+}
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+@keyframes glitch-it {
+   0% { transform: translate(0); }
+   20% { transform: translate(-2px, 2px); }
+   40% { transform: translate(-2px, -2px); }
+   60% { transform: translate(2px, 2px); }
+   80% { transform: translate(2px, -2px); }
+   to { transform: translate(0); }
+}
+</style>
