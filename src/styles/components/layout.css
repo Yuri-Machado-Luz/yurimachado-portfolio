@@ -1,0 +1,22 @@
+@layer components {
+  .container {
+    @apply w-full mx-auto px-6;
+    max-width: var(--container-max);
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      @apply px-10;
+    }
+  }
+
+  .section {
+    @apply py-20;
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      @apply py-28;
+    }
+  }
+}

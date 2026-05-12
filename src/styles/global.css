@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+@import "./base/tokens.css";
+@import "./base/reset.css";
+@import "./base/prose.css";
+
+@import "./components/index.css";
+
+@import "./markdown/callouts.css";
+@import "./markdown/pagination.css";

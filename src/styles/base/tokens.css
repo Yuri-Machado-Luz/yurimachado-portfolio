@@ -1,0 +1,85 @@
+/* =============================================
+   DESIGN TOKENS — from Figma (Mode 1.tokens.json)
+   ============================================= */
+@theme {
+  /* Background / Surface */
+  --color-bg:             #050404;
+  --color-surface:        #110F0F;
+  --color-surface-strong: #1B1919;
+  --color-border:         rgba(255, 255, 255, 0.12);
+
+  /* Text */
+  --color-text:  #F2F4F3;
+  --color-muted: #B8B2B2;
+
+  /* Primary — Red (Figma: primary-*) */
+  --color-primary:       #E82828;
+  --color-primary-light: #F64646;
+  --color-primary-dark:  #BA1313;
+  --color-primary-deep:  #A40C0C;
+
+  --color-primary-50:  #FF7D7D;
+  --color-primary-100: #FB6565;
+  --color-primary-200: #F64646;
+  --color-primary-300: #E82828;
+  --color-primary-400: #D21C1C;
+  --color-primary-500: #BA1313;
+  --color-primary-600: #A40C0C;
+  --color-primary-700: #940909;
+  --color-primary-800: #760303;
+  --color-primary-900: #5D0000;
+  --color-primary-950: #380000;
+
+  /* Accent — Cyan/Teal (Figma: cyan-*) */
+  --color-accent:       #1BD19A;
+  --color-accent-light: #27E8AE;
+  --color-accent-dark:  #0DA476;
+
+  --color-cyan-50:  #7DFFD8;
+  --color-cyan-100: #65FBCE;
+  --color-cyan-200: #46F5C1;
+  --color-cyan-300: #27E8AE;
+  --color-cyan-400: #1BD19A;
+  --color-cyan-500: #13BB89;
+  --color-cyan-600: #0DA476;
+  --color-cyan-700: #09946A;
+  --color-cyan-800: #037654;
+  --color-cyan-900: #005D41;
+  --color-cyan-950: #003727;
+
+  /* Shock — Hot Pink (Figma: shock-*) */
+  --color-shock:       #E82771;
+  --color-shock-light: #F54689;
+
+  /* Neutrals (Figma: neutral-*) */
+  --color-neutral-50:  #C5BFBF;
+  --color-neutral-100: #B8B2B2;
+  --color-neutral-200: #B0A9A9;
+  --color-neutral-300: #A19999;
+  --color-neutral-400: #7F7676;
+  --color-neutral-500: #3A3535;
+  --color-neutral-600: #272424;
+  --color-neutral-700: #1B1919;
+  --color-neutral-800: #110F0F;
+  --color-neutral-900: #0A0A0A;
+  --color-neutral-950: #050404;
+
+  /* Tones — callouts */
+  --color-tone-note:    #7DFFD8;
+  --color-tone-tip:     #1BD19A;
+  --color-tone-caution: #E8A827;
+  --color-tone-danger:  #E82828;
+  --color-tone-success: #3AE827;
+  --color-tone-info:    #1BD19A;
+
+  /* Typography */
+  --font-sans:    "Be Vietnam", "Fira Sans", system-ui, sans-serif;
+  --font-display: "Be Vietnam", "Fira Sans", Georgia, serif;
+  --font-mono:    "Fira Code", ui-monospace, monospace;
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}

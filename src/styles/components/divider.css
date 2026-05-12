@@ -1,0 +1,7 @@
+@layer components {
+  .divider {
+    @apply w-full;
+    height: 1px;
+    background: var(--color-border);
+  }
+}

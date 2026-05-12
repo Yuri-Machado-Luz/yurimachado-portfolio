@@ -1,0 +1,46 @@
+@layer components {
+  /* ---- NAV ---- */
+
+  .nav-link {
+    @apply text-sm transition-colors duration-150 no-underline;
+    color: var(--color-muted);
+  }
+
+  .nav-link:hover,
+  .nav-link-active {
+    color: var(--color-text);
+  }
+
+  .nav-link-active {
+    @apply text-sm no-underline;
+  }
+
+  /* ---- SIDEBAR ---- */
+
+  .sidebar-item,
+  .sidebar-item-active {
+    @apply flex items-center gap-2 px-3 py-1.5 rounded-md text-sm
+           transition-colors duration-150 no-underline;
+  }
+
+  .sidebar-item {
+    color: var(--color-muted);
+  }
+
+  .sidebar-item:hover {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+  }
+
+  .sidebar-item-active {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+    border-left: 2px solid var(--color-primary);
+    padding-left: calc(0.75rem - 2px);
+  }
+
+  .sidebar-group-label {
+    @apply text-xs font-semibold uppercase tracking-wider px-3 py-1 mt-4 mb-1;
+    color: var(--color-muted);
+  }
+}

@@ -1,0 +1,29 @@
+@layer components {
+  .eyebrow {
+    @apply text-xs font-semibold tracking-widest uppercase;
+    color: var(--color-accent);
+  }
+
+  .page-title {
+    @apply font-bold tracking-tight leading-none;
+    font-size: clamp(2.25rem, 7vw, 3.75rem);
+    color: var(--color-text);
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+  }
+
+  .section-title {
+    @apply font-semibold;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--color-text);
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .page-lead {
+    @apply leading-relaxed;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--color-muted);
+    max-width: 56ch;
+  }
+}

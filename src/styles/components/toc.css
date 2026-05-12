@@ -1,0 +1,18 @@
+@layer components {
+  .toc-link,
+  .toc-link-active {
+    @apply block text-sm py-0.5 transition-colors duration-150 no-underline;
+  }
+
+  .toc-link {
+    color: var(--color-muted);
+  }
+
+  .toc-link:hover {
+    color: var(--color-text);
+  }
+
+  .toc-link-active {
+    color: var(--color-accent);
+  }
+}

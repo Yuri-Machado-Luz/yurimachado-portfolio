@@ -1,0 +1,38 @@
+@layer components {
+  .card,
+  .card-interactive,
+  .card-accent,
+  .card-flat {
+    @apply rounded-lg transition-all duration-200;
+    border: 1px solid var(--color-border);
+  }
+
+  .card,
+  .card-interactive,
+  .card-accent {
+    background: var(--color-surface);
+  }
+
+  .card-flat {
+    background: transparent;
+  }
+
+  .card-interactive {
+    @apply cursor-pointer;
+  }
+
+  .card-interactive:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 1px var(--color-primary),
+      0 0 24px var(--primary-glow);
+    transform: translateY(-2px);
+  }
+
+  .card-accent:hover {
+    border-color: var(--color-accent);
+    box-shadow:
+      0 0 0 1px var(--color-accent),
+      0 0 20px var(--accent-glow);
+  }
+}

@@ -1,0 +1,39 @@
+@layer components {
+  .file-tree-link {
+    @apply flex items-center gap-2 px-2 py-1 rounded text-sm
+           transition-colors duration-150 no-underline;
+    color: var(--color-muted);
+  }
+
+  .file-tree-link:hover {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+  }
+
+  .file-tree-group {
+    @apply flex flex-col;
+  }
+
+  .file-tree-group-label {
+    @apply flex items-center gap-2 px-2 py-1 rounded text-sm font-medium
+           cursor-pointer transition-colors duration-150;
+    color: var(--color-muted);
+  }
+
+  .file-tree-group-label:hover {
+    color: var(--color-text);
+  }
+
+  .file-tree-link-active {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+    border-left: 2px solid var(--color-primary);
+    padding-left: calc(0.5rem - 2px);
+  }
+
+  .file-tree-nested {
+    @apply flex flex-col pl-4;
+    border-left: 1px solid var(--color-border);
+    margin-left: 0.6rem;
+  }
+}

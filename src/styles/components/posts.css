@@ -1,0 +1,20 @@
+@layer components {
+  .post-item {
+    @apply flex flex-col gap-1 py-4 transition-colors duration-150 no-underline;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-item:hover .post-item-title {
+    color: var(--color-primary);
+  }
+
+  .post-item-title {
+    @apply font-medium transition-colors duration-150;
+    color: var(--color-text);
+  }
+
+  .post-item-meta {
+    @apply text-xs;
+    color: var(--color-muted);
+  }
+}

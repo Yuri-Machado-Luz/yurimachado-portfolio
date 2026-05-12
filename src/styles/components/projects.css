@@ -1,0 +1,29 @@
+@layer components {
+  .project-card {
+    @apply flex flex-col gap-4 p-6 rounded-lg cursor-pointer transition-all duration-200;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .project-card:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 1px var(--color-primary),
+      0 0 24px var(--primary-glow);
+    transform: translateY(-2px);
+  }
+
+  .project-card-title {
+    @apply font-semibold;
+    color: var(--color-text);
+  }
+
+  .project-card-desc {
+    @apply text-sm leading-relaxed;
+    color: var(--color-muted);
+  }
+
+  .project-card-tags {
+    @apply flex flex-wrap gap-1.5 mt-auto pt-2;
+  }
+}

@@ -1,0 +1,94 @@
+@layer base {
+  :root {
+    --primary-glow: rgba(232, 40, 40, 0.18);
+    --accent-glow:  rgba(27, 209, 154, 0.15);
+
+    /* Callout tone aliases */
+    --tone-note:    var(--color-tone-note);
+    --tone-tip:     var(--color-tone-tip);
+    --tone-caution: var(--color-tone-caution);
+    --tone-danger:  var(--color-tone-danger);
+    --tone-success: var(--color-tone-success);
+    --tone-info:    var(--color-tone-info);
+
+    /* Soft tone variants for callout backgrounds */
+    --tone-note-soft:    color-mix(in srgb, var(--color-tone-note) 10%, var(--color-surface-strong));
+    --tone-tip-soft:     color-mix(in srgb, var(--color-tone-tip) 10%, var(--color-surface-strong));
+    --tone-caution-soft: color-mix(in srgb, var(--color-tone-caution) 10%, var(--color-surface-strong));
+    --tone-danger-soft:  color-mix(in srgb, var(--color-tone-danger) 10%, var(--color-surface-strong));
+    --tone-success-soft: color-mix(in srgb, var(--color-tone-success) 10%, var(--color-surface-strong));
+    --tone-info-soft:    color-mix(in srgb, var(--color-tone-info) 10%, var(--color-surface-strong));
+
+    /* Layout */
+    --prose-width:    72ch;
+    --container-max:  1280px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    background:
+      radial-gradient(circle at top left,  color-mix(in srgb, var(--color-primary-deep) 14%, transparent), transparent 40%),
+      radial-gradient(circle at top right, color-mix(in srgb, var(--color-primary-900)   8%, transparent), transparent 28%),
+      linear-gradient(180deg, #0a0707 0%, var(--color-bg) 100%);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    flex: 1;
+    min-height: 0;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-primary) 28%, transparent);
+    color: var(--color-text);
+  }
+}

@@ -1,0 +1,57 @@
+@layer components {
+  .badge,
+  .badge-primary,
+  .badge-accent,
+  .badge-caution,
+  .badge-danger,
+  .badge-success,
+  .badge-dev {
+    @apply inline-flex items-center text-xs font-medium rounded-full px-2 py-0.5;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+  }
+
+  .badge-primary {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .badge-accent {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .badge-caution {
+    border-color: var(--color-tone-caution);
+    color: var(--color-tone-caution);
+  }
+
+  .badge-danger {
+    border-color: var(--color-tone-danger);
+    color: var(--color-tone-danger);
+  }
+
+  .badge-success {
+    border-color: var(--color-tone-success);
+    color: var(--color-tone-success);
+  }
+
+  .badge-dev {
+    border-color: var(--color-shock);
+    color: var(--color-shock);
+  }
+
+  .tag {
+    @apply inline-flex items-center text-xs font-medium rounded px-2 py-0.5;
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+  }
+
+  .skill-tag {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1 rounded-full;
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+  }
+}

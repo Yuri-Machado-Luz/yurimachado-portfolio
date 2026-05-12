@@ -1,0 +1,59 @@
+.post-pagination {
+  margin: 2rem 0;
+}
+.post-pagination .pagination {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+.post-pagination a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 0;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.post-pagination .pagination--prev,
+.post-pagination .pagination--next {
+  display: flex;
+}
+.post-pagination .pagination--prev a.prev,
+.post-pagination .pagination--next a.next {
+  flex: 0 1 32rem;
+}
+.post-pagination .pagination--prev {
+  justify-content: flex-start;
+}
+.post-pagination .pagination--next {
+  justify-content: flex-end;
+}
+.post-pagination .pagination--split {
+  justify-content: space-between;
+}
+.post-pagination .pagination--split a {
+  flex: 1 1 0;
+}
+.post-pagination a.prev {
+  text-align: left;
+}
+.post-pagination a.next {
+  text-align: right;
+}
+.post-pagination a:hover {
+  border-color: color-mix(in srgb, var(--color-text) 22%, transparent);
+  transform: translateY(-1px);
+}
+.post-pagination .pagination-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+.post-pagination .pagination-title {
+  font-weight: 600;
+}
