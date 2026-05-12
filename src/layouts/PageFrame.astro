@@ -1,0 +1,47 @@
+---
+// PageFrame: 3-column grid layout with optional sidebar and TOC.
+// Mobile: single column. Columns added progressively as props are set.
+interface Props {
+  hasSidebar?: boolean;
+  hasToc?: boolean;
+}
+
+const { hasSidebar = true, hasToc = true } = Astro.props;
+
+const gridCols =
+  hasSidebar && hasToc
+    ? "lg:grid-cols-[280px_1fr_220px]"
+    : hasSidebar
+      ? "lg:grid-cols-[280px_1fr]"
+      : hasToc
+        ? "lg:grid-cols-[1fr_220px]"
+        : "max-w-3xl mx-auto";
+---
+
+<div class={`grid grid-cols-1 gap-0 min-h-screen ${gridCols}`}>
+  {
+    hasSidebar && (
+      <aside
+        class="hidden lg:flex flex-col sticky top-0 h-screen overflow-y-auto border-r border-border shrink-0"
+        style="background: var(--color-surface);"
+      >
+        <slot name="sidebar" />
+      </aside>
+    )
+  }
+
+  <main class="min-w-0 w-full">
+    <slot />
+  </main>
+
+  {
+    hasToc && (
+      <aside
+        class="hidden xl:flex flex-col sticky top-0 h-screen overflow-y-auto border-l border-border shrink-0"
+        style="background: var(--color-surface);"
+      >
+        <slot name="toc" />
+      </aside>
+    )
+  }
+</div>

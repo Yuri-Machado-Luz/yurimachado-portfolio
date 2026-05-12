@@ -1,0 +1,46 @@
+---
+import ArticleLayout from "@layouts/ArticleLayout.astro";
+import { getCollection } from "astro:content";
+
+const title = "Docs — Yuri Machado Luz";
+const description = "Documentação técnica dos projetos — referência estruturada para consulta rápida.";
+
+const docs = (
+  await getCollection("docs", ({ data, id }) => !data.draft && !id.startsWith("projects/"))
+).sort((a, b) => a.data.order - b.data.order);
+---
+
+<ArticleLayout title={title} description={description} collection="docs">
+  <div class="mb-10">
+    <p class="eyebrow mb-3">Documentação</p>
+    <h1 class="section-title mb-4">Referência técnica dos projetos.</h1>
+    <p class="text-sm leading-relaxed text-muted">
+      Guias e documentação estruturada para consulta rápida, sem perder contexto.
+    </p>
+  </div>
+
+  {docs.length === 0 ? (
+    <p class="text-sm text-muted">Nenhum documento disponível ainda.</p>
+  ) : (
+    <div class="grid gap-4 sm:grid-cols-2">
+      {docs.map((doc) => (
+        <a
+          href={`/docs/${doc.id}`}
+          class="card-interactive no-underline flex flex-col gap-2 p-5"
+        >
+          <h2 class="font-semibold text-base text-text">
+            {doc.data.title}
+          </h2>
+          <p class="text-sm leading-relaxed text-muted">
+            {doc.data.description.length > 80
+              ? doc.data.description.slice(0, 80) + "…"
+              : doc.data.description}
+          </p>
+          <span class="text-sm font-medium mt-auto pt-1 text-accent">
+            Ler documento →
+          </span>
+        </a>
+      ))}
+    </div>
+  )}
+</ArticleLayout>

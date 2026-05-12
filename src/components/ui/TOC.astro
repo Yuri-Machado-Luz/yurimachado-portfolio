@@ -1,0 +1,58 @@
+---
+const { headings = [] } = Astro.props;
+
+function sanitize(value: unknown) {
+  return String(value ?? "")
+    .replace(/\s*🔗\s*$/u, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+---
+
+<div class="flex flex-col h-full">
+  <div class="pt-6 pb-2">
+    <p class="sidebar-group-label" style="padding-left: 0.75rem; margin-top: 0;">Neste documento</p>
+  </div>
+  <nav class="px-3 pb-6 flex flex-col gap-0.5">
+    {headings.map((h: any) => (
+      <a
+        class="toc-link"
+        href={`#${h.slug}`}
+        style={h.depth >= 3
+          ? `padding-left: ${(h.depth - 2) * 0.75}rem; border-left: 1px solid var(--color-border);`
+          : ""}
+      >
+        {sanitize(h.text)}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+
+  if (links.length > 0) {
+    const headings = Array.from(links)
+      .map((link) => {
+        const id = (link.getAttribute("href") ?? "").replace(/^#/, "");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const id = entry.target.id;
+          links.forEach((link) => {
+            const match = (link.getAttribute("href") ?? "") === `#${id}`;
+            link.classList.toggle("toc-link-active", match);
+          });
+        }
+      },
+      { rootMargin: "-20% 0px -70% 0px", threshold: 0 }
+    );
+
+    headings.forEach((h) => observer.observe(h));
+  }
+</script>

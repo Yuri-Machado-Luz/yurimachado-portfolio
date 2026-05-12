@@ -1,0 +1,87 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+
+import Layout from "@layouts/ArticleLayout.astro";
+import { getPaginationLinks } from "../../lib/content/navigation/pagination";
+
+export async function getStaticPaths() {
+  const docs = (await getCollection(
+    "docs",
+    ({ data }) => !data.draft,
+  )) as any[];
+
+  return docs.map((doc) => ({
+    params: { slug: doc.id },
+    props: { slug: doc.id },
+  }));
+}
+
+const slugParam = Astro.params.slug;
+const slug = Array.isArray(slugParam) ? slugParam.join("/") : slugParam || "";
+
+let Content: any = null;
+let headings = [] as any[];
+let docTitle = "";
+let docDescription = "";
+
+const entry = await getEntry("docs", slug);
+if (entry) {
+  const rendered = await render(entry);
+  Content = rendered.Content;
+  headings = rendered.headings ?? [];
+  docTitle = entry.data.title;
+  docDescription = entry.data.description;
+}
+
+const allDocs = (await getCollection("docs", (item) => !item.data.draft)) as any[];
+const pagination = getPaginationLinks(slug, allDocs, "docs");
+---
+
+<Layout
+  title={docTitle}
+  description={docDescription}
+  collection="docs"
+  headings={headings}
+>
+  <article>
+    <h1 class="page-title mb-8">{docTitle}</h1>
+    <div class="prose">
+      {Content && <Content />}
+    </div>
+  </article>
+
+  {
+    (pagination.prev || pagination.next) && (
+      <nav
+        class={[
+          "mt-12 pt-6 border-t border-border flex gap-4",
+          pagination.mode === "both" ? "justify-between" : pagination.mode === "prev" ? "justify-start" : "justify-end",
+        ].join(" ")}
+        aria-label="Navegação entre documentos"
+      >
+        {pagination.prev && (
+          <a
+            class="flex flex-col gap-1 group max-w-[45%]"
+            href={pagination.prev.href}
+          >
+            <span class="text-xs font-medium uppercase tracking-wider text-muted">Anterior</span>
+            <span class="text-sm font-medium transition-colors text-text">
+              &larr; {pagination.prev.title}
+            </span>
+          </a>
+        )}
+        {pagination.next && (
+          <a
+            class="flex flex-col gap-1 items-end group max-w-[45%] ml-auto"
+            href={pagination.next.href}
+          >
+            <span class="text-xs font-medium uppercase tracking-wider text-muted">Próximo</span>
+            <span class="text-sm font-medium transition-colors text-text">
+              {pagination.next.title} &rarr;
+            </span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+</Layout>

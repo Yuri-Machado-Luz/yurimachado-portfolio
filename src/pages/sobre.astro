@@ -1,0 +1,314 @@
+---
+import RootLayout from "@layouts/RootLayout.astro";
+import ContactForm from "@components/ui/ContactForm";
+import SkillsSection from "@components/ui/SkillsSection.astro";
+
+const title = "Sobre | Yuri Machado Luz";
+const description =
+  "Desenvolvedor Full-Stack com formação em Psicologia e Sistemas de Informação. Baseado em São Paulo.";
+
+const experience = [
+  {
+    role: "Full-Stack Developer & Designer",
+    company: "Autônomo",
+    period: "Jul 2022 – Presente",
+    bullets: [
+      "Desenvolvimento de aplicações web responsivas para PMEs com React, Node.js e Tailwind CSS.",
+      "Implementação de automações para otimização de fluxos manuais repetitivos.",
+      "Integração de APIs para sincronização de dados entre sistemas.",
+      "Criação de interfaces centradas no usuário aplicando princípios de UX/UI.",
+      "Consultoria em arquitetura e documentação técnica para sustentabilidade de sistemas.",
+    ],
+  },
+  {
+    role: "Design & Redação Técnica",
+    company: "Autônomo",
+    period: "Jan 2020 – Presente",
+    bullets: [
+      "Criação de identidade visual e prototipagem UI/UX com Figma e Canva.",
+      "Produção de conteúdo técnico e acadêmico — relatórios e pesquisas no formato ABNT.",
+    ],
+  },
+  {
+    role: "Assistente Administrativo Pleno",
+    company: "IBM / BPO Decision",
+    period: "Dez 2024 – Abr 2025",
+    bullets: [
+      "Redesenho do fluxo de onboarding: tempo de integração reduzido de 7 para 3 dias (−57%).",
+      "Automação de arquivamento em massa com Python e documentação de SOPs.",
+      "Desenvolvimento de dashboard de KPIs interativo com Excel e VBA.",
+    ],
+  },
+  {
+    role: "Analista de Backoffice",
+    company: "Cielo / BPO Atento",
+    period: "Jul 2021 – Abr 2022",
+    bullets: [
+      "Automação de triagem de e-mails com Power Automate.",
+      "Auditoria de bases de dados para conformidade regulatória.",
+      "Ponto focal para Ouvidoria e Jurídico.",
+    ],
+  },
+  {
+    role: "Suporte Técnico L2",
+    company: "Santander",
+    period: "Mai 2020 – Fev 2021",
+    bullets: [
+      "Suporte técnico a usuários internos e gestão de incidentes de segurança da informação.",
+    ],
+  },
+];
+
+const education = [
+  {
+    degree: "Análise e Desenvolvimento de Sistemas",
+    institution: "Universidade Cidade de São Paulo",
+    detail: "Cursando — conclusão prevista 2027",
+  },
+  {
+    degree: "Psicologia",
+    institution: "Universidade Nove de Julho",
+    detail: "4 anos completos (8º semestre)",
+  },
+];
+
+const languages = [
+  { name: "Português", level: "Nativo" },
+  { name: "Inglês",    level: "Avançado" },
+  { name: "Espanhol",  level: "Básico" },
+  { name: "Francês",   level: "Básico (estudando)" },
+  { name: "Japonês",   level: "Básico (estudando)" },
+];
+---
+
+<RootLayout title={title} description={description}>
+
+  <!-- ============================================================
+       1. HEADER
+       ============================================================ -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow mb-4">Sobre</p>
+      <h1 class="page-title mb-4">Yuri Machado Luz</h1>
+      <p class="page-lead mb-8">
+        Desenvolvedor Full-Stack · Analista de Sistemas · São Paulo, Brasil
+      </p>
+
+      <div class="flex items-center gap-5">
+        <a
+          href="https://github.com/Yuri-Machado-Luz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-outline flex items-center gap-2"
+        >
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/yurimachadoluz0311"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-outline flex items-center gap-2"
+        >
+          <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. BIO
+       ============================================================ -->
+  <section class="container mb-20">
+    <div class="grid gap-10 lg:grid-cols-[1fr_240px] items-start">
+
+      <!-- Bio text -->
+      <div class="flex flex-col gap-5 text-muted leading-[1.8]">
+        <p>
+          Comecei minha trajetória em tecnologia ainda na graduação em Psicologia
+          — e desde então combino análise comportamental com engenharia de
+          software. Acredito que o melhor produto nasce da interseção entre código
+          robusto e design centrado em pessoas.
+        </p>
+        <p>
+          Trabalho de forma autônoma desde 2020, desenvolvendo sistemas web,
+          automações e produtos digitais para PMEs e projetos próprios. Em 2024,
+          integrei a equipe da IBM onde redesenhei o ciclo de onboarding e reduzi
+          o tempo de integração em 57%, antes de retomar minha trajetória
+          independente.
+        </p>
+        <p>
+          Disponível para atuar como desenvolvedor full-stack, front/back-end ou
+          web developer — com foco em código limpo, testes automatizados e
+          interfaces responsivas.
+        </p>
+      </div>
+
+      <!-- Quick facts card -->
+      <div class="card border border-border p-5 flex flex-col gap-3 h-fit">
+        <p class="sidebar-group-label" style="margin-top: 0; padding-left: 0;">Info rápida</p>
+        {[
+          { icon: "fa-location-dot",  text: "São Paulo, Brasil"          },
+          { icon: "fa-circle-check",  text: "Disponível para projetos"   },
+          { icon: "fa-code",          text: "Full-stack · Front · Back"  },
+          { icon: "fa-calendar",      text: "Dev independente desde 2020" },
+          { icon: "fa-graduation-cap",text: "ADS + Psicologia"           },
+        ].map((fact) => (
+          <div class="flex items-center gap-2.5 text-sm">
+            <i class={`fa-solid ${fact.icon} text-accent w-4 text-center shrink-0 text-xs`} aria-hidden="true" />
+            <span class="text-muted">{fact.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. SKILLS
+       ============================================================ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title mb-10">Habilidades</h2>
+      <SkillsSection />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. EXPERIENCE
+       ============================================================ -->
+  <section class="container mb-20">
+    <h2 class="section-title mb-10">Experiência</h2>
+
+    <div class="flex flex-col gap-0">
+      {experience.map((item, i) => (
+        <div
+          class={`flex gap-6 py-6 ${i > 0 ? "border-t border-border" : ""}`}
+        >
+          <!-- Timeline dot -->
+          <div class="flex flex-col items-center pt-1.5 shrink-0">
+            <div
+              class="w-2.5 h-2.5 rounded-full shrink-0 bg-primary"
+            ></div>
+            {i < experience.length - 1 && (
+              <div
+                class="w-px flex-1 mt-2 bg-border min-h-8"
+              ></div>
+            )}
+          </div>
+
+          <!-- Content -->
+          <div class="flex flex-col gap-2 pb-2">
+            <h3 class="font-semibold text-base text-text">{item.role}</h3>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-medium text-accent">{item.company}</span>
+              <span class="text-xs text-muted">{item.period}</span>
+            </div>
+            <ul class="flex flex-col gap-1 mt-1">
+              {item.bullets.map((bullet) => (
+                <li class="text-sm flex gap-2 text-muted">
+                  <span class="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-border"></span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. EDUCATION
+       ============================================================ -->
+  <section class="container mb-20">
+    <h2 class="section-title mb-8">Formação</h2>
+
+    <div class="flex flex-col gap-4">
+      {education.map((edu) => (
+        <div class="card-flat p-5 rounded-lg border border-border">
+          <h3 class="font-semibold text-text">{edu.degree}</h3>
+          <p class="text-sm mt-1 text-accent">{edu.institution}</p>
+          <p class="text-xs mt-1 text-muted">{edu.detail}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. LANGUAGES
+       ============================================================ -->
+  <section class="container mb-20">
+    <h2 class="section-title mb-8">Idiomas</h2>
+
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {languages.map((lang) => (
+        <div
+          class="flex items-center justify-between px-4 py-3 rounded-lg border border-border"
+        >
+          <span class="text-sm font-medium text-text">{lang.name}</span>
+          <span class="text-xs text-muted">{lang.level}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. CV
+       ============================================================ -->
+  <section class="container mb-20 flex flex-col items-center text-center gap-4">
+    <p class="text-sm text-muted">
+      Prefere ver o currículo completo? Acesse meu perfil no GitHub ou LinkedIn.
+    </p>
+    <a
+      href="https://github.com/Yuri-Machado-Luz"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-outline flex items-center gap-2"
+    >
+      <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+      Ver perfil no GitHub
+    </a>
+  </section>
+
+  <!-- ============================================================
+       8. CONTACT
+       ============================================================ -->
+  <section id="contato" class="section">
+    <div class="container">
+      <p class="eyebrow mb-3">Contato</p>
+      <h2 class="section-title mb-8">Vamos conversar?</h2>
+
+      <ContactForm client:load />
+
+      <div class="flex items-center gap-6 mt-10">
+        <a
+          href="https://github.com/Yuri-Machado-Luz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-link flex items-center gap-1.5 text-sm"
+        >
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/yurimachadoluz0311"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-link flex items-center gap-1.5 text-sm"
+        >
+          <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+          LinkedIn
+        </a>
+        <a
+          href="mailto:yurimachadoluz@gmail.com"
+          class="nav-link flex items-center gap-1.5 text-sm"
+        >
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          yurimachadoluz@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+</RootLayout>

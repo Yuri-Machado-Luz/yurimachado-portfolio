@@ -1,0 +1,36 @@
+---
+import Sidebar from "@components/ui/Sidebar.astro";
+import TOC from "@components/ui/TOC.astro";
+import PageFrame from "@layouts/PageFrame.astro";
+import RootLayout from "@layouts/RootLayout.astro";
+import { buildSidebarFromCollection } from "../lib/content/navigation/navigation";
+import config from "../config";
+
+interface Props {
+  title: string;
+  description?: string;
+  collection?: "blog" | "docs";
+  items?: any[];
+  headings?: Array<{ slug: string; text: string; depth?: number }>;
+  [key: string]: any;
+}
+
+const { title, description, collection, items: itemsProp = [], headings = [], ...props } = Astro.props;
+
+const items = collection
+  ? await buildSidebarFromCollection(collection, config.sidebar[collection])
+  : itemsProp;
+
+const hasSidebar = items.length > 0;
+const hasToc = headings.length > 0;
+---
+
+<RootLayout title={title} description={description} {...props}>
+  <PageFrame hasSidebar={hasSidebar} hasToc={hasToc}>
+    {hasSidebar && <Sidebar slot="sidebar" items={items} />}
+    <div class="container py-10 lg:py-14">
+      <slot />
+    </div>
+    {hasToc && <TOC slot="toc" headings={headings} />}
+  </PageFrame>
+</RootLayout>

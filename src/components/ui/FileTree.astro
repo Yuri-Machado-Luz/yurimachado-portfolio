@@ -1,0 +1,109 @@
+---
+const { items = [], nested = false } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+// Map content collection badge variants → design system badge classes
+const BADGE_CLASS: Record<string, string> = {
+  development: "badge-dev",
+  note:        "badge",
+  tip:         "badge-accent",
+  caution:     "badge-caution",
+  danger:      "badge-danger",
+  success:     "badge-success",
+  default:     "badge",
+};
+
+function badgeClass(variant: string) {
+  return BADGE_CLASS[variant] ?? "badge";
+}
+
+function badgeText(badge: any): string | undefined {
+  if (!badge) return undefined;
+  return typeof badge === "string" ? badge : badge.text;
+}
+
+function badgeVariant(badge: any): string {
+  if (!badge || typeof badge === "string") return "default";
+  return badge.variant ?? "default";
+}
+
+function isActive(href: string) {
+  return currentPath === href || currentPath === href + "/";
+}
+---
+
+{nested ? (
+  <>
+    {items.map((it: any) => {
+      if (it.type === "group") {
+        return (
+          <li class="file-tree-group">
+            <details open={!it.collapsed}>
+              <summary class="file-tree-group-label">
+                <span class="truncate min-w-0">{it.label}</span>
+                {it.badge && (
+                  <span class={badgeClass(badgeVariant(it.badge))}>
+                    {badgeText(it.badge)}
+                  </span>
+                )}
+                <i class="fa-solid fa-chevron-right toggle-chevron ml-auto" aria-hidden="true" />
+              </summary>
+              <div class="file-tree-nested">
+                <ul class="flex flex-col gap-0.5">
+                  <Astro.self items={it.entries} nested />
+                </ul>
+              </div>
+            </details>
+          </li>
+        );
+      }
+
+      const active = isActive(it.href);
+      return (
+        <li>
+          <a
+            class={`file-tree-link ${active ? "file-tree-link-active" : ""}`}
+            href={it.href}
+            aria-current={active ? "page" : undefined}
+            {...(it.attrs ?? {})}
+          >
+            <span class="truncate min-w-0">{it.label || it.title}</span>
+            {it.badge && (
+              <span class={badgeClass(badgeVariant(it.badge))}>
+                {badgeText(it.badge)}
+              </span>
+            )}
+          </a>
+        </li>
+      );
+    })}
+  </>
+) : (
+  <nav aria-label="Navegação da seção">
+    <ul class="flex flex-col gap-0.5">
+      <Astro.self items={items} nested />
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toggle-chevron {
+    font-size: 0.6rem;
+    color: var(--color-muted);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  details[open] > summary .toggle-chevron {
+    transform: rotate(90deg);
+  }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date?: Date;
+  featured?: boolean;
+}
+
+const { href, title, description, date, featured = false } = Astro.props;
+
+const formattedDate = date
+  ? date.toLocaleDateString("pt-BR", { year: "numeric", month: "long", day: "numeric" })
+  : null;
+---
+
+<a
+  href={href}
+  class={`card-interactive no-underline flex flex-col gap-3 p-6 ${featured ? "lg:col-span-2" : ""}`}
+>
+  <div class="flex items-center justify-between gap-4">
+    <p class="eyebrow">
+      {featured ? "Publicação recente" : "Artigo"}
+    </p>
+    {formattedDate && (
+      <time class="text-xs shrink-0 text-muted">
+        {formattedDate}
+      </time>
+    )}
+  </div>
+
+  <h2
+    class={`font-semibold leading-snug transition-colors duration-150 text-text ${featured ? "text-xl" : "text-base"}`}
+  >
+    {title}
+  </h2>
+
+  <p class="text-sm leading-relaxed text-muted">
+    {featured ? description : description.length > 120 ? description.slice(0, 120) + "…" : description}
+  </p>
+
+  <span class="text-sm font-medium mt-auto pt-2 text-primary">
+    Ler artigo →
+  </span>
+</a>
