@@ -38,6 +38,7 @@ export default defineConfig({
         ),
         "@layouts": fileURLToPath(new URL("./src/layouts", import.meta.url)),
         "@styles": fileURLToPath(new URL("./src/styles", import.meta.url)),
+        "@data": fileURLToPath(new URL("./src/data", import.meta.url)),
         // Lib aliases for organized content utilities
         "@lib": fileURLToPath(new URL("./src/lib", import.meta.url)),
       },

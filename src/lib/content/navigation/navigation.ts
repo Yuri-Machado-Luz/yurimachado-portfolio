@@ -5,6 +5,7 @@ import type {
   SidebarEntry,
   SidebarGroup,
   SidebarLink,
+  SidebarSeparator,
 } from "../../types";
 
 type CollectionEntry = Awaited<ReturnType<typeof getCollection>>[number];
@@ -19,6 +20,7 @@ type SidebarConfig = {
   badge?: unknown;
   attrs?: Record<string, string | boolean>;
   collapsed?: boolean;
+  separator?: boolean;
 };
 
 /**
@@ -40,6 +42,7 @@ export type SidebarCustomGroupInput = {
   label: string;
   entries: SidebarCustomItemInput[];
   collapsed?: boolean;
+  separator?: boolean;
   badge?: SidebarBadge;
   attrs?: Record<string, string | boolean>;
 };
@@ -178,6 +181,16 @@ function normalizeCustomItems(items: SidebarCustomItemInput[]): SidebarEntry[] {
       } satisfies SidebarLink;
     }
 
+    if (item.separator) {
+      return {
+        type: "separator",
+        label: item.label,
+        badge: item.badge,
+        attrs: item.attrs,
+        entries: normalizeCustomItems(item.entries),
+      } satisfies SidebarSeparator;
+    }
+
     return {
       type: "group",
       label: item.label,
@@ -246,24 +259,41 @@ function groupEntries(
       groupOverride.label ||
       groupBaseMeta.label ||
       formatSidebarLabel(groupKey);
+    const isSeparator =
+      groupOverride.separator ?? groupBaseMeta.separator ?? false;
     const groupCollapsed =
       groupOverride.collapsed ?? groupBaseMeta.collapsed ?? false;
+    const sharedAttrs = (groupOverride.attrs ?? groupBaseMeta.attrs) as
+      | Record<string, string | boolean>
+      | undefined;
+    const sharedBadge = toSidebarBadge(
+      groupOverride.badge ?? groupBaseMeta.badge,
+    );
+    const childEntries = groupEntries(
+      collectionName,
+      groupMembers,
+      [...prefix, groupKey],
+      options,
+    );
 
-    items.push({
-      type: "group",
-      label: groupLabel,
-      collapsed: groupCollapsed,
-      badge: toSidebarBadge(groupOverride.badge ?? groupBaseMeta.badge),
-      attrs: (groupOverride.attrs ?? groupBaseMeta.attrs) as
-        | Record<string, string | boolean>
-        | undefined,
-      entries: groupEntries(
-        collectionName,
-        groupMembers,
-        [...prefix, groupKey],
-        options,
-      ),
-    } satisfies SidebarGroup);
+    items.push(
+      isSeparator
+        ? ({
+            type: "separator",
+            label: groupLabel,
+            badge: sharedBadge,
+            attrs: sharedAttrs,
+            entries: childEntries,
+          } satisfies SidebarSeparator)
+        : ({
+            type: "group",
+            label: groupLabel,
+            collapsed: groupCollapsed,
+            badge: sharedBadge,
+            attrs: sharedAttrs,
+            entries: childEntries,
+          } satisfies SidebarGroup),
+    );
   }
 
   return items;
