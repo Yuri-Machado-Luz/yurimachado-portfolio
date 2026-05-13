@@ -1,4 +1,5 @@
 ---
+import { statusMap } from "@data/projects";
 import RootLayout from "@layouts/RootLayout.astro";
 import { getCollection } from "astro:content";
 
@@ -9,21 +10,9 @@ const description =
 const projects = (
   await getCollection("docs", ({ id }) => id.startsWith("projects/"))
 ).sort((a, b) => a.data.order - b.data.order);
-
-const statusMap: Record<string, { label: string; badge: string }> = {
-  "em-producao": { label: "Em produção", badge: "badge-success" },
-  ativo: { label: "Ativo", badge: "badge-accent" },
-  "em-desenvolvimento": { label: "Em desenvolvimento", badge: "badge-dev" },
-  arquivado: { label: "Arquivado", badge: "badge" },
-  experimental: { label: "Experimental", badge: "badge-caution" },
-  "em-uso": { label: "Em uso", badge: "badge-primary" },
-};
 ---
 
 <RootLayout title={title} description={description}>
-  <!-- ================================================================
-       HEADER
-       ================================================================ -->
   <section class="section">
     <div class="container">
       <p class="eyebrow mb-4">Projetos</p>
@@ -35,11 +24,8 @@ const statusMap: Record<string, { label: string; badge: string }> = {
     </div>
   </section>
 
-  <!-- ================================================================
-       GRID
-       ================================================================ -->
   <section class="container pb-20">
-    <div class="grid gap-6 lg:grid-cols-2">
+    <div class="projects-grid">
       {
         projects.map((project) => {
           const { label, badge } = statusMap[project.data.status!] ?? {
@@ -48,7 +34,7 @@ const statusMap: Record<string, { label: string; badge: string }> = {
           };
           return (
             <article class="project-card">
-              <div class="flex items-start justify-between gap-3">
+              <div class="project-card__header">
                 <h2 class="project-card-title">{project.data.title}</h2>
                 <span class={badge}>{label}</span>
               </div>
@@ -60,20 +46,17 @@ const statusMap: Record<string, { label: string; badge: string }> = {
                 ))}
               </div>
 
-              <div class="flex items-center gap-3 pt-2">
-                <a
-                  href={`/docs/${project.id}`}
-                  class="btn-ghost btn-sm flex items-center gap-1.5"
-                >
+              <div class="project-card__links">
+                <a href={`/docs/${project.id}`} class="btn-ghost btn-sm">
                   <i class="fa-solid fa-file-lines" aria-hidden="true" />
-                  Docs
+                  Documentação
                 </a>
                 {project.data.github && (
                   <a
                     href={project.data.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn-ghost btn-sm flex items-center gap-1.5"
+                    class="btn-ghost btn-sm"
                   >
                     <i class="fa-brands fa-github" aria-hidden="true" />
                     GitHub
@@ -84,7 +67,7 @@ const statusMap: Record<string, { label: string; badge: string }> = {
                     href={project.data.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn-outline btn-sm flex items-center gap-1.5"
+                    class="btn-outline btn-sm"
                   >
                     <i
                       class="fa-solid fa-arrow-up-right-from-square"

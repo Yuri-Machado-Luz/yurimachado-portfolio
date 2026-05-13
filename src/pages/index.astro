@@ -1,12 +1,14 @@
 ---
+import { heroStats } from "@data/about";
+import { statusMap } from "@data/projects";
 import RootLayout from "@layouts/RootLayout.astro";
 import { getCollection } from "astro:content";
 
 const title = "Yuri Machado Luz — Desenvolvedor Full-Stack";
-const description =
-  "Full-Stack Developer focado em arquitetura, automação e design de sistemas. Desenho, documento e implemento aplicações web, automações e pipelines — estruturando fluxoes e reduzindo operações manuais com soluções sustentáveis e escaláveis.";
+const description = `Full-Stack Developer focado em arquitetura, automação e design de sistemas.
+  Desenho, documento e implemento aplicações web, automações e pipelines — estruturando fluxoes e reduzindo operações manuais com soluções sustentáveis e escaláveis.`;
 
-const allPosts = await getCollection("blog");
+const allPosts = await getCollection("notas");
 const recentPosts = allPosts
   .filter((post) => !post.data.draft)
   .sort((a, b) => {
@@ -20,15 +22,6 @@ const recentPosts = allPosts
   })
   .slice(0, 3);
 
-const statusMap: Record<string, { label: string; badge: string }> = {
-  "em-producao": { label: "Em produção", badge: "badge-success" },
-  ativo: { label: "Ativo", badge: "badge-accent" },
-  "em-desenvolvimento": { label: "Em desenvolvimento", badge: "badge-dev" },
-  arquivado: { label: "Arquivado", badge: "badge" },
-  experimental: { label: "Experimental", badge: "badge-caution" },
-  "em-uso": { label: "Em uso", badge: "badge-primary" },
-};
-
 const featuredProjects = (
   await getCollection(
     "docs",
@@ -40,51 +33,47 @@ const featuredProjects = (
 ---
 
 <RootLayout title={title} description={description}>
-  <!-- ============================================================
-       1. HERO
-       ============================================================ -->
-  <section class="min-h-[90vh] flex items-center relative overflow-hidden">
+  <section class="hero">
     <div class="hero-glow" aria-hidden="true"></div>
-
-    <div class="container relative z-10">
-      <p class="eyebrow mb-4">
-        Solution Architect · UI/UX Designer · Automation Analyst
+    <p class="badge-primary mb-8 text-sm">
+      <span class="px-1 animate-pulse text-xl">•</span>Aberto para oportunidades
+    </p>
+    <div class="hero__content">
+      <h1 class="page-title">Yuri Machado</h1>
+      <p class="eyecatch mt-8 mb-6 uppercase">Full-Stack Developer</p>
+      <p class="page-lead">
+        Sou Analista de Sistemas com experiência em desenvolvimento Full-Stack,
+        APIs REST, UI/UX e automação de processos. Especializado em processos
+        multidisciplinares com foco em arquitetura, documentação e
+        escalabilidade.
       </p>
-      <h1 class="page-title mb-6">Yuri Machado.</h1>
-      <p class="page-lead mb-10">
-        {description}
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <a href="/projetos" class="btn-primary">Ver Projetos →</a>
-        <a href="/sobre" class="btn-outline">Saiba mais</a>
+      <div class="hero__cta mt-10">
+        <a href="/projetos" class="btn-primary btn-lg">Ver Projetos</a>
+        <a href="/sobre" class="btn-outline btn-lg">Saiba mais</a>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       2. ABOUT TEASER
-       ============================================================ -->
   <section class="section">
     <div class="container">
-      <div class="grid gap-12 lg:grid-cols-2 items-start">
-        <!-- Left column -->
-        <div class="flex flex-col gap-6">
+      <div class="about-grid">
+        <div class="about-grid__text">
           <h2 class="section-title">Sobre mim</h2>
           <p class="page-lead">
-            <p>
+            <p class="text-justify">
               Desenvolvedor com formação multidisciplinar — iniciado em
               Psicologia, especializando-me em Análise e Desenvolvimento de
               Sistemas. Essa mistura me deu um olhar atento à estrutura,
               comportamento e clareza, que aplico ao projetar sistemas web,
               automações e processos bem documentados.
             </p>
-            <p>
+            <p class="text-justify">
               Desde 2020, atuo de forma autônoma. Crio aplicações escaláveis,
               fluxos automatizados e re-designs de processos — sempre
               estruturando operações para que as soluções sejam compreensíveis e
               escaláveis.
             </p>
-            <p>
+            <p class="text-justify">
               Escrevo, desenho e documento o que construo. Atuo também como
               designer gráfico, redator técnico e ghostwriter. Isso me permite
               cobrir um projeto inteiro: da arquitetura à comunicação final, com
@@ -96,21 +85,12 @@ const featuredProjects = (
           >
         </div>
 
-        <!-- Right column — highlight stats -->
-        <div class="flex flex-col gap-4 pt-8 lg:pt-12">
+        <div class="about-grid__stats">
           {
-            [
-              { value: "4+", label: "Anos como desenvolvedor autônomo" },
-              { value: "−57%", label: "Redução no ciclo de onboarding (IBM)" },
-              { value: "5", label: "Projetos ativos no ar" },
-            ].map((stat) => (
-              <div class="flex items-center gap-4 p-4 rounded-r-lg card-flat border-l-2 border-primary">
-                <span class="text-3xl font-bold font-display text-primary leading-none shrink-0">
-                  {stat.value}
-                </span>
-                <span class="text-sm text-muted leading-snug">
-                  {stat.label}
-                </span>
+            heroStats.map((stat) => (
+              <div class="stat-item">
+                <span class="stat-item__value">{stat.value}</span>
+                <span class="stat-item__label">{stat.label}</span>
               </div>
             ))
           }
@@ -119,15 +99,12 @@ const featuredProjects = (
     </div>
   </section>
 
-  <!-- ============================================================
-       3. FEATURED PROJECTS
-       ============================================================ -->
   <section class="section">
     <div class="container">
       <p class="eyebrow mb-3">Projetos</p>
       <h2 class="section-title mb-10">Trabalhos selecionados</h2>
 
-      <div class="grid gap-6 lg:grid-cols-3">
+      <div class="featured-grid">
         {
           featuredProjects.map((project) => {
             const status = statusMap[project.data.status ?? ""] ?? {
@@ -136,7 +113,7 @@ const featuredProjects = (
             };
             return (
               <a href={`/docs/${project.id}`} class="project-card no-underline">
-                <div class="flex items-start justify-between gap-3">
+                <div class="project-card__header">
                   <h3 class="project-card-title">{project.data.title}</h3>
                   <span class={status.badge}>{status.label}</span>
                 </div>
@@ -158,9 +135,6 @@ const featuredProjects = (
     </div>
   </section>
 
-  <!-- ============================================================
-       4. RECENT NOTES
-       ============================================================ -->
   <section class="section">
     <div class="container">
       <p class="eyebrow mb-3">Notas</p>
@@ -168,9 +142,9 @@ const featuredProjects = (
 
       {
         recentPosts.length > 0 ? (
-          <div class="flex flex-col">
+          <div>
             {recentPosts.map((post) => (
-              <a href={`/blog/${post.id}`} class="post-item no-underline">
+              <a href={`/notas/${post.id}`} class="post-item no-underline">
                 <span class="post-item-title">{post.data.title}</span>
                 <span class="post-item-meta">
                   {post.data.description}
@@ -192,49 +166,36 @@ const featuredProjects = (
           <p class="post-item-meta">Nenhuma publicação disponível ainda.</p>
         )
       }
-
-      <div class="mt-10">
-        <a href="/blog" class="btn-ghost">Ver todas as notas →</a>
-      </div>
+      <a href="/artigos" class="btn-ghost pl-0">Ver todas as notas</a>
     </div>
   </section>
 
-  <!-- ============================================================
-       5. CONTACT CTA
-       ============================================================ -->
-  <section class="section">
-    <div class="container text-center flex flex-col items-center gap-6">
+  <section class="section mt-0 pt-0">
+    <div class="container contact-cta">
       <h2 class="section-title">Vamos conversar?</h2>
-      <p class="text-muted max-w-md leading-relaxed">
-        Aberto a projetos freelance, colaborações e conversas sobre tecnologia e
-        design.
-      </p>
+
       <a href="/sobre#contato" class="btn-primary">Entrar em contato</a>
 
-      <!-- Social links -->
-      <div class="flex items-center gap-6 mt-2">
+      <div class="social-links mt-2">
         <a
           href="https://github.com/Yuri-Machado-Luz"
           target="_blank"
           rel="noopener noreferrer"
-          class="nav-link flex items-center gap-1.5 text-sm"
+          class="social-link"
         >
           <i class="fa-brands fa-github" aria-hidden="true"></i>
           GitHub
         </a>
         <a
-          href="https://linkedin.com/in/yurimachadoluz0311"
+          href="https://linkedin.com/in/yurimachadoluz"
           target="_blank"
           rel="noopener noreferrer"
-          class="nav-link flex items-center gap-1.5 text-sm"
+          class="social-link"
         >
           <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
           LinkedIn
         </a>
-        <a
-          href="mailto:yurimachadoluz@gmail.com"
-          class="nav-link flex items-center gap-1.5 text-sm"
-        >
+        <a href="mailto:yurimachadoluz@gmail.com" class="social-link">
           <i class="fa-solid fa-envelope" aria-hidden="true"></i>
           Email
         </a>

@@ -1,0 +1,76 @@
+---
+import PostCard from "@components/ui/PostCard.astro";
+import RootLayout from "@layouts/RootLayout.astro";
+import { getCollection } from "astro:content";
+
+const title = "Artigos — Yuri Machado Luz";
+const description = "Notas, roadmaps e documentação técnica dos projetos.";
+
+const notas = (await getCollection("notas", ({ data }) => !data.draft)).sort(
+  (a, b) => {
+    const left = a.data.lastUpdated?.getTime?.() ?? 0;
+    const right = b.data.lastUpdated?.getTime?.() ?? 0;
+    return right - left;
+  },
+);
+
+const docs = (await getCollection("docs", ({ data }) => !data.draft)).sort(
+  (a, b) => (a.data.order ?? 9999) - (b.data.order ?? 9999),
+);
+---
+
+<RootLayout title={title} description={description}>
+  <!-- HERO -->
+  <section class="section">
+    <div class="container">
+      <h1 class="page-title mb-6">Notas e documentações</h1>
+      <p class="page-lead">
+        Roadmaps, decisões técnicas e documentação dos projetos.
+      </p>
+    </div>
+  </section>
+
+  <!-- NOTAS -->
+  {
+    notas.length > 0 && (
+      <section class="container pb-16">
+        <h2 class="text-sm font-semibold uppercase tracking-widest text-muted mb-6">
+          Notas
+        </h2>
+        <div class="grid gap-5 lg:grid-cols-2">
+          {notas.map((nota, i) => (
+            <PostCard
+              href={`/notas/${nota.id}`}
+              title={nota.data.title}
+              description={nota.data.description}
+              date={nota.data.lastUpdated}
+              featured={i === 0}
+              type="nota"
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- DOCUMENTAÇÃO -->
+  {
+    docs.length > 0 && (
+      <section class="container pb-20">
+        <h2 class="text-sm font-semibold uppercase tracking-widest text-muted mb-6">
+          Documentações
+        </h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {docs.map((doc) => (
+            <PostCard
+              href={`/docs/${doc.id}`}
+              title={doc.data.title}
+              description={doc.data.description}
+              type="doc"
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</RootLayout>

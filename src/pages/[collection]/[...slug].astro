@@ -1,0 +1,120 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+
+import Layout from "@layouts/ArticleLayout.astro";
+import { getPaginationLinks } from "../../lib/content/navigation/pagination";
+
+export async function getStaticPaths() {
+  const COLLECTIONS = ["docs", "notas"] as const;
+  const allPaths = await Promise.all(
+    COLLECTIONS.map(async (col) => {
+      const entries = await getCollection(col, ({ data }) => !data.draft);
+      return entries.map((entry) => ({
+        params: { collection: col, slug: entry.id },
+        props: { collection: col },
+      }));
+    }),
+  );
+  return allPaths.flat();
+}
+
+const { collection } = Astro.props as { collection: "docs" | "notas" };
+const slug = Astro.params.slug as string;
+
+const entry = await getEntry(collection, slug);
+if (!entry) throw new Error(`Entry not found: ${collection}/${slug}`);
+
+const { Content, headings } = await render(entry as any);
+
+const allEntries = (await getCollection(
+  collection,
+  ({ data }) => !data.draft,
+)) as any[];
+const pagination = getPaginationLinks(slug, allEntries, collection);
+
+const isNotas = collection === "notas";
+const entryData = entry.data as any;
+---
+
+<Layout
+  title={entryData.title}
+  description={entryData.description}
+  collection={collection}
+  headings={headings}
+>
+  {
+    isNotas ? (
+      <>
+        <header class="mb-8">
+          <p class="eyebrow mb-3">Notas</p>
+          <h1 class="page-title mb-4">{entryData.title}</h1>
+          <p class="page-lead">{entryData.description}</p>
+        </header>
+        <hr class="my-8 border-border" />
+        <article>
+          <section aria-label="Conteúdo" class="prose">
+            <Content />
+          </section>
+          {entryData.lastUpdated && (
+            <section
+              aria-label="Metadados"
+              class="mt-10 pt-6 border-t border-border text-sm text-muted"
+            >
+              <span>
+                Atualizado em{" "}
+                {entryData.lastUpdated.toLocaleDateString("pt-BR")}
+              </span>
+            </section>
+          )}
+        </article>
+      </>
+    ) : (
+      <article>
+        <h1 class="page-title mb-8">{entryData.title}</h1>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+    )
+  }
+
+  {
+    (pagination.prev || pagination.next) && (
+      <nav
+        class={[
+          "mt-12 pt-6 border-t border-border flex gap-4",
+          pagination.mode === "split"
+            ? "justify-between"
+            : pagination.mode === "prev"
+              ? "justify-start"
+              : "justify-end",
+        ].join(" ")}
+        aria-label="Navegação entre páginas"
+      >
+        {pagination.prev && (
+          <a class="flex flex-col gap-1 group max-w-[45%]" href={pagination.prev.href}>
+            <span class="text-xs font-medium uppercase tracking-wider text-muted">
+              Anterior
+            </span>
+            <span class="text-sm font-medium transition-colors text-text">
+              &larr; {pagination.prev.title}
+            </span>
+          </a>
+        )}
+        {pagination.next && (
+          <a
+            class="flex flex-col gap-1 items-end group max-w-[45%] ml-auto"
+            href={pagination.next.href}
+          >
+            <span class="text-xs font-medium uppercase tracking-wider text-muted">
+              Próximo
+            </span>
+            <span class="text-sm font-medium transition-colors text-text">
+              {pagination.next.title} &rarr;
+            </span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+</Layout>

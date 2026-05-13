@@ -3,23 +3,42 @@ import Sidebar from "@components/ui/Sidebar.astro";
 import TOC from "@components/ui/TOC.astro";
 import PageFrame from "@layouts/PageFrame.astro";
 import RootLayout from "@layouts/RootLayout.astro";
-import { buildSidebarFromCollection } from "../lib/content/navigation/navigation";
 import config from "../config";
+import { buildSidebarFromCollection } from "../lib/content/navigation/navigation";
+import type { SidebarEntry, SidebarSeparator } from "../lib/types";
 
 interface Props {
   title: string;
   description?: string;
-  collection?: "blog" | "docs";
+  collection?: string;
   items?: any[];
   headings?: Array<{ slug: string; text: string; depth?: number }>;
   [key: string]: any;
 }
 
-const { title, description, collection, items: itemsProp = [], headings = [], ...props } = Astro.props;
+const {
+  title,
+  description,
+  collection,
+  items: itemsProp = [],
+  headings = [],
+  ...props
+} = Astro.props;
 
-const items = collection
-  ? await buildSidebarFromCollection(collection, config.sidebar[collection])
-  : itemsProp;
+let items: SidebarEntry[] = itemsProp;
+
+if (collection) {
+  const notasItems = await buildSidebarFromCollection("notas", config.sidebar.notas);
+  const docsItems = await buildSidebarFromCollection("docs", config.sidebar.docs);
+
+  const notasSeparator: SidebarSeparator = {
+    type: "separator",
+    label: "Notas",
+    entries: notasItems,
+  };
+
+  items = [notasSeparator, ...docsItems];
+}
 
 const hasSidebar = items.length > 0;
 const hasToc = headings.length > 0;
@@ -27,7 +46,15 @@ const hasToc = headings.length > 0;
 
 <RootLayout title={title} description={description} {...props}>
   <PageFrame hasSidebar={hasSidebar} hasToc={hasToc}>
-    {hasSidebar && <Sidebar slot="sidebar" items={items} />}
+    {
+      hasSidebar && (
+        <Sidebar
+          slot="sidebar"
+          items={items}
+          title="Artigos"
+        />
+      )
+    }
     <div class="container py-10 lg:py-14">
       <slot />
     </div>
