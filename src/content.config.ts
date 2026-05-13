@@ -32,8 +32,11 @@ const sidebarSchema = z.object({
   collapsed: z.boolean().optional(),
 });
 
-const blog = defineCollection({
-  loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+const notas = defineCollection({
+  loader: glob({
+    base: "./src/content/articles/notas",
+    pattern: "**/*.{md,mdx}",
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -44,25 +47,18 @@ const blog = defineCollection({
 });
 
 const docs = defineCollection({
-  loader: glob({ base: "./src/content/docs", pattern: "**/*.{md,mdx}" }),
+  loader: glob({
+    base: "./src/content/articles/docs",
+    pattern: "**/*.{md,mdx}",
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
     order: z.number().default(0),
     draft: z.boolean().default(false),
     sidebar: sidebarSchema.optional(),
-    // project-specific optional fields (docs/projects/*)
     tags: z.array(z.string()).optional(),
-    status: z
-      .enum([
-        "em-producao",
-        "ativo",
-        "em-desenvolvimento",
-        "arquivado",
-        "experimental",
-        "em-uso",
-      ])
-      .optional(),
+    status: z.enum(["ativo", "dev", "arquivado", "beta"]).optional(),
     github: z.url().optional(),
     live: z.url().optional(),
     featured: z.boolean().default(false),
@@ -70,4 +66,4 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { blog, docs };
+export const collections = { docs, notas };

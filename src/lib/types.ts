@@ -10,13 +10,21 @@ export interface SidebarLink {
 export interface SidebarGroup {
   type: "group";
   label: string;
-  entries: Array<SidebarLink | SidebarGroup>;
+  entries: SidebarEntry[];
   collapsed?: boolean;
   badge?: SidebarBadge;
   attrs?: Record<string, string | boolean>;
 }
 
-export type SidebarEntry = SidebarLink | SidebarGroup;
+export interface SidebarSeparator {
+  type: "separator";
+  label: string;
+  entries: SidebarEntry[];
+  badge?: SidebarBadge;
+  attrs?: Record<string, string | boolean>;
+}
+
+export type SidebarEntry = SidebarLink | SidebarGroup | SidebarSeparator;
 
 export interface SidebarBadge {
   text: string;
