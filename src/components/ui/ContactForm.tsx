@@ -14,6 +14,13 @@ export default function ContactForm() {
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!formRef.current) return;
+
+    const els = formRef.current.elements;
+    const nameVal = (els.namedItem("name") as HTMLInputElement).value;
+    (els.namedItem("title") as HTMLInputElement).value = nameVal;
+    (els.namedItem("time") as HTMLInputElement).value =
+      new Date().toLocaleString("pt-BR");
+
     setStatus("sending");
     try {
       await emailjs.sendForm(
@@ -32,17 +39,17 @@ export default function ContactForm() {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="flex flex-col gap-5 max-w-xl"
+      className="flex flex-col gap-5 max-w-xl mx-auto w-full text-left"
     >
       <div className="form-group">
         <label className="form-label" htmlFor="contact-name">
           Nome
         </label>
         <input
-          id="contact-name"
+          id="name"
           className="form-input"
           type="text"
-          name="from_name"
+          name="name"
           required
           placeholder="Seu nome"
         />
@@ -53,10 +60,10 @@ export default function ContactForm() {
           Email
         </label>
         <input
-          id="contact-email"
+          id="email"
           className="form-input"
           type="email"
-          name="reply_to"
+          name="email"
           required
           placeholder="seu@email.com"
         />
@@ -75,9 +82,13 @@ export default function ContactForm() {
         />
       </div>
 
+      <input type="hidden" name="title" />
+      <input type="hidden" name="time" />
+
       {status === "sent" && (
         <p style={{ color: "var(--color-tone-success)", fontSize: "0.875rem" }}>
-          Mensagem enviada! Retornarei em breve.
+          Mensagem enviada! Em breve entrarei em contato. Obrigado por chegar
+          até aqui.
         </p>
       )}
       {status === "error" && (

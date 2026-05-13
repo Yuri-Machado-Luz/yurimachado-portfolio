@@ -36,6 +36,24 @@ function isActive(href: string) {
 {nested ? (
   <>
     {items.map((it: any) => {
+      if (it.type === "separator") {
+        return (
+          <li class="file-tree-separator">
+            <p class="sidebar-group-label">
+              <span class="truncate min-w-0">{it.label}</span>
+              {it.badge && (
+                <span class={badgeClass(badgeVariant(it.badge))}>
+                  {badgeText(it.badge)}
+                </span>
+              )}
+            </p>
+            <ul class="flex flex-col gap-0.5">
+              <Astro.self items={it.entries} nested />
+            </ul>
+          </li>
+        );
+      }
+
       if (it.type === "group") {
         return (
           <li class="file-tree-group">

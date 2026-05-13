@@ -1,29 +1,14 @@
 ---
-const pathname = Astro.url.pathname;
+import { navLinks } from "@data/nav";
 
-const navLinks = [
-  { label: "Início", href: "/" },
-  { label: "Projetos", href: "/projetos" },
-  { label: "Blog", href: "/blog" },
-  { label: "Docs", href: "/docs" },
-  { label: "Sobre", href: "/sobre" },
-];
+const pathname = Astro.url.pathname;
 ---
 
-<header
-  class="fixed top-0 left-0 right-0 z-50 h-15 flex items-center bg-bg border-b border-border"
->
-  <div class="container flex items-center justify-between w-full">
-    <!-- Logo -->
-    <a
-      href="/"
-      class="font-bold text-lg tracking-tight no-underline text-text font-display"
-    >
-      YUMA
-    </a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-logo">YUMA</a>
 
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-6" aria-label="Navegação principal">
+    <nav class="nav-desktop" aria-label="Navegação principal">
       {
         navLinks.map(({ label, href }) => {
           const isActive =
@@ -41,22 +26,20 @@ const navLinks = [
       }
     </nav>
 
-    <!-- Mobile hamburger -->
     <button
       id="menu-toggle"
-      class="md:hidden flex items-center justify-center w-9 h-9 rounded-md transition-colors text-muted"
+      class="menu-toggle"
       aria-label="Abrir menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
-      <i class="fa-solid fa-bars text-base" aria-hidden="true"></i>
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
     </button>
   </div>
 
-  <!-- Mobile menu -->
   <nav
     id="mobile-menu"
-    class="hidden absolute top-15 left-0 right-0 flex-col gap-1 px-6 py-4 md:hidden bg-bg border-b border-border"
+    class="nav-mobile"
     aria-label="Navegação mobile"
   >
     {
@@ -66,7 +49,7 @@ const navLinks = [
         return (
           <a
             href={href}
-            class={`block py-2 ${isActive ? "nav-link-active" : "nav-link"}`}
+            class={isActive ? "nav-link-active" : "nav-link"}
             aria-current={isActive ? "page" : undefined}
           >
             {label}
@@ -77,23 +60,15 @@ const navLinks = [
   </nav>
 </header>
 
-<!-- Spacer so content doesn't hide under fixed header -->
-<div class="h-15" aria-hidden="true"></div>
+<div class="header-spacer" aria-hidden="true"></div>
 
 <script>
   const toggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("mobile-menu");
 
   toggle?.addEventListener("click", () => {
-    const isOpen = menu?.classList.contains("flex");
-    if (isOpen) {
-      menu?.classList.remove("flex");
-      menu?.classList.add("hidden");
-      toggle.setAttribute("aria-expanded", "false");
-    } else {
-      menu?.classList.remove("hidden");
-      menu?.classList.add("flex");
-      toggle.setAttribute("aria-expanded", "true");
-    }
+    const isOpen = menu?.classList.contains("is-open");
+    menu?.classList.toggle("is-open", !isOpen);
+    toggle.setAttribute("aria-expanded", String(!isOpen));
   });
 </script>

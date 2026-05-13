@@ -5,13 +5,27 @@ interface Props {
   description: string;
   date?: Date;
   featured?: boolean;
+  type?: "nota" | "doc";
 }
 
-const { href, title, description, date, featured = false } = Astro.props;
+const { href, title, description, date, featured = false, type = "nota" } = Astro.props;
 
 const formattedDate = date
-  ? date.toLocaleDateString("pt-BR", { year: "numeric", month: "long", day: "numeric" })
+  ? date.toLocaleDateString("pt-BR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
   : null;
+
+const eyebrow =
+  type === "doc"
+    ? "Documentação"
+    : featured
+      ? "Publicação recente"
+      : "Nota";
+
+const cta = type === "doc" ? "Ver documentação." : "Ler agora.";
 ---
 
 <a
@@ -19,14 +33,12 @@ const formattedDate = date
   class={`card-interactive no-underline flex flex-col gap-3 p-6 ${featured ? "lg:col-span-2" : ""}`}
 >
   <div class="flex items-center justify-between gap-4">
-    <p class="eyebrow">
-      {featured ? "Publicação recente" : "Artigo"}
-    </p>
-    {formattedDate && (
-      <time class="text-xs shrink-0 text-muted">
-        {formattedDate}
-      </time>
-    )}
+    <p class="eyebrow">{eyebrow}</p>
+    {
+      formattedDate && (
+        <time class="text-xs shrink-0 text-muted">{formattedDate}</time>
+      )
+    }
   </div>
 
   <h2
@@ -36,10 +48,16 @@ const formattedDate = date
   </h2>
 
   <p class="text-sm leading-relaxed text-muted">
-    {featured ? description : description.length > 120 ? description.slice(0, 120) + "…" : description}
+    {
+      featured
+        ? description
+        : description.length > 120
+          ? description.slice(0, 120) + "…"
+          : description
+    }
   </p>
 
   <span class="text-sm font-medium mt-auto pt-2 text-primary">
-    Ler artigo →
+    {cta}
   </span>
 </a>
