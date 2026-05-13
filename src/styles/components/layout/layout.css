@@ -1,0 +1,40 @@
+@layer components {
+  .container {
+    @apply w-full mx-auto px-6;
+    max-width: var(--container-max);
+
+    @media (min-width: 1024px) {
+      @apply px-10;
+    }
+  }
+
+  .section {
+    @apply py-18;
+
+    @media (min-width: 1024px) {
+      @apply py-24;
+    }
+  }
+
+  /* ---- FOOTER ---- */
+
+  .site-footer {
+    width: 100%;
+    padding: 1.5rem 0;
+    margin-top: auto;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .site-footer__text {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+}

@@ -1,12 +1,27 @@
 @layer components {
+  .eyecatch {
+    @apply font-semibold tracking-widest;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    background: linear-gradient(
+      to right,
+      var(--color-primary-500),
+      var(--color-primary-200),
+      var(--color-primary-500)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
   .eyebrow {
-    @apply text-xs font-semibold tracking-widest uppercase;
+    @apply text-sm font-semibold tracking-widest;
     color: var(--color-accent);
   }
 
   .page-title {
     @apply font-bold tracking-tight leading-none;
-    font-size: clamp(2.25rem, 7vw, 3.75rem);
+    font-size: clamp(3.7rem, 7vw, 5.5rem);
     color: var(--color-text);
     font-family: var(--font-display);
     letter-spacing: -0.04em;

@@ -36,4 +36,16 @@
     border-left: 1px solid var(--color-border);
     margin-left: 0.6rem;
   }
+
+  .file-tree-separator {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+
+    & > .sidebar-group-label {
+      padding-left: 0.5rem;
+      margin-top: 0;
+      background-color: rgb(from var(--color-muted) r g b / 0.3);
+    }
+  }
 }

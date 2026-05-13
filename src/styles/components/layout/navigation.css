@@ -1,0 +1,131 @@
+@layer components {
+  /* ---- HEADER ---- */
+
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: 3.75rem;
+    display: flex;
+    align-items: center;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .site-logo {
+    @apply text-2xl;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-decoration: none;
+    color: var(--color-text);
+    font-family: var(--font-display);
+  }
+
+  .header-spacer {
+    height: 2.25rem;
+  }
+
+  .nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-md);
+    transition: color 150ms;
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-text);
+    }
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .nav-mobile {
+    display: none;
+    position: absolute;
+    top: 3.75rem;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    padding: 1rem 4.5rem 1rem 1.5rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+
+    &.is-open {
+      display: flex;
+    }
+  }
+
+  /* ---- NAV ---- */
+
+  .nav-link {
+    @apply text-xl transition-colors duration-150 no-underline;
+    color: var(--color-muted);
+  }
+
+  .nav-link:hover,
+  .nav-link-active {
+    color: var(--color-text);
+  }
+
+  .nav-link-active {
+    @apply text-xl no-underline;
+  }
+
+  /* ---- SIDEBAR ---- */
+
+  .sidebar-item,
+  .sidebar-item-active {
+    @apply flex items-center gap-2 px-3 py-1.5 rounded-md text-xl
+           transition-colors duration-150 no-underline;
+  }
+
+  .sidebar-item {
+    color: var(--color-muted);
+  }
+
+  .sidebar-item:hover {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+  }
+
+  .sidebar-item-active {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+    border-left: 2px solid var(--color-primary);
+    padding-left: calc(0.75rem - 2px);
+  }
+
+  .sidebar-group-label {
+    @apply text-xs font-semibold uppercase tracking-wider px-3 py-1 mt-4 mb-1;
+    color: var(--color-muted);
+  }
+}

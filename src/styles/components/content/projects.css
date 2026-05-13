@@ -1,4 +1,27 @@
 @layer components {
+
+  /* ---- GRIDS ---- */
+
+  .projects-grid {
+    display: grid;
+    gap: 1.5rem;
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .featured-grid {
+    display: grid;
+    gap: 1.5rem;
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ---- CARD ---- */
+
   .project-card {
     @apply flex flex-col gap-4 p-6 rounded-lg cursor-pointer transition-all duration-200;
     background: var(--color-surface);
@@ -25,5 +48,19 @@
 
   .project-card-tags {
     @apply flex flex-wrap gap-1.5 mt-auto pt-2;
+  }
+
+  .project-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .project-card__links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
   }
 }

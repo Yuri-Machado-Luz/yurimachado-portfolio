@@ -1,0 +1,32 @@
+@layer components {
+  .hero {
+    display: flex;
+    min-height: 90vh;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+}

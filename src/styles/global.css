@@ -1,11 +1,31 @@
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+/* ── Base ────────────────────────────────────────────────────── */
 @import "./base/tokens.css";
 @import "./base/reset.css";
 @import "./base/prose.css";
 
-@import "./components/index.css";
+/* ── UI — componentes reutilizáveis ──────────────────────────── */
+@import "./components/ui/buttons.css";
+@import "./components/ui/badges.css";
+@import "./components/ui/cards.css";
+@import "./components/ui/divider.css";
+@import "./components/ui/forms.css";
+@import "./components/ui/typography.css";
 
+/* ── Layout — estrutura e navegação ──────────────────────────── */
+@import "./components/layout/layout.css";
+@import "./components/layout/navigation.css";
+@import "./components/layout/hero.css";
+@import "./components/layout/sections.css";
+
+/* ── Content — seções de conteúdo ────────────────────────────── */
+@import "./components/content/posts.css";
+@import "./components/content/projects.css";
+@import "./components/content/file-tree.css";
+@import "./components/content/toc.css";
+
+/* ── Markdown ────────────────────────────────────────────────── */
 @import "./markdown/callouts.css";
 @import "./markdown/pagination.css";
